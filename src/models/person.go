@@ -1,9 +1,8 @@
 package models
 
 import (
-	db "arieltaiwanlb/database" //check
-
-	_ "github.com/go-sql-driver/mysql"
+	db "arieltaiwanlb/database" 
+	// _ "github.com/go-sql-driver/mysql"
 )
 
 type Person struct {
@@ -32,7 +31,7 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 
 	for rows.Next() {
 		var person Person
-		rows.Scan(&person.sn, &person.userName, &person.userLineID)
+		rows.Scan(&person.SN, &person.userName, &person.userLineID)
 		persons = append(persons, person)
 	}
 	if err = rows.Err(); err != nil {

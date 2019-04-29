@@ -1,14 +1,14 @@
 package models
 
 import (
-	db "arieltaiwanlb/database" 
+	db "github.com/yoshiW86/ArielTaiwanLB/database" 
 	// _ "github.com/go-sql-driver/mysql"
 )
 
 type Person struct {
-	SN         int    `json:"sn" form:"sn"`
-	userName   string `json:"userName" form:"userName"`
-	userLineID string `json:"userLineID" form:"userLineID"`
+	SN         int    
+	userName   string 
+	userLineID string 
 }
 
 func (p *Person) AddPerson() (id int64, err error) {

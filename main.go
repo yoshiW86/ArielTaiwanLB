@@ -7,12 +7,13 @@ import (
 	"os"
 	"strings"
 
-	. "github.com/yoshiW86/ArielTaiwanLB/models"
+	md "github.com/yoshiW86/ArielTaiwanLB/models"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 var bot *linebot.Client
+var replyMsg string
 
 func main() {
 	var err error
@@ -47,12 +48,17 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					//let user clock in/ out
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
-					if hasUser(strings.Fields(userText)[1]) {
+					replyMsg += "register/n"
+					if hasUser(userID, strings.Fields(userText)[1]) {
+						//yes
+
+					}else{
+						//no
 
 					}
 
 				} else {
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(userID+":"+userText+" OK!")).Do(); err != nil {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMsg)).Do(); err != nil {
 						log.Print(err)
 					}
 				}
@@ -63,8 +69,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func hasUser(lineID string) bool {
-	p := md.Person{userLineID: lineID}
+func hasUser(lineID string, userSetName string) bool {
+	p := md.Person{userLineID:lineID, userName:userSetName}
+	ra, err := p.GetPersons()
+ 	if err != nil {
+		  log.Fatalln(err)
+		  replyMsg+="fale/n"
 
-	return
+		  return false
+ 	}
+	return true
 }

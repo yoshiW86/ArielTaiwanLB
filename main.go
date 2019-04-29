@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	. "arieltaiwnalb/models"
+	. "github.com/yoshiW86/ArielTaiwanLB/models"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )

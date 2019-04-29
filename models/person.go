@@ -6,7 +6,7 @@ import (
 )
 
 type Person struct {
-	SN         int    
+	sn         int    
 	userName   string 
 	userLineID string 
 }
@@ -31,7 +31,7 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 
 	for rows.Next() {
 		var person Person
-		rows.Scan(&person.SN, &person.userName, &person.userLineID)
+		rows.Scan(person.sn, person.userName, person.userLineID)
 		persons = append(persons, person)
 	}
 	if err = rows.Err(); err != nil {

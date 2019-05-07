@@ -58,11 +58,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 
 				} else {
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMsg)).Do(); err != nil {
-						log.Print(err)
+					
 					}
 				}
 
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMsg)).Do(); err != nil {
+					log.Print(err)
 			}
 
 		}
@@ -70,13 +71,15 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func hasUser(lineID string, userSetName string) bool {
-	p := md.Person{userLineID:lineID, userName:userSetName}
+	p := md.Person{UserLineID:lineID, UserName:userSetName}
 	ra, err := p.GetPersons()
  	if err != nil {
 		  log.Fatalln(err)
 		  replyMsg+="fale/n"
 
 		  return false
- 	}
+	} 
+	replyMsg+="success getUser +" + ra[0].UserName
 	return true
+	
 }

@@ -6,13 +6,13 @@ import (
 )
 
 type Person struct {
-	sn         int    
-	userName   string 
-	userLineID string 
+	Sn         int    
+	UserName   string 
+	UserLineID string 
 }
 
 func (p *Person) AddPerson() (id int64, err error) {
-	rs, err := db.SqlDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.userName, p.userLineID)
+	rs, err := db.SqlDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
 	if err != nil {
 		return
 	}
@@ -31,7 +31,7 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 
 	for rows.Next() {
 		var person Person
-		rows.Scan(person.sn, person.userName, person.userLineID)
+		rows.Scan(person.Sn, person.UserName, person.UserLineID)
 		persons = append(persons, person)
 	}
 	if err = rows.Err(); err != nil {

@@ -3,6 +3,7 @@ package models
 import (
 	db "github.com/yoshiW86/ArielTaiwanLB/database" 
 	// _ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 type Person struct {
@@ -14,6 +15,7 @@ type Person struct {
 func (p *Person) AddPerson() (id int64, err error) {
 	rs, err := db.SqlDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
 	if err != nil {
+		log.Fatal(err.Error())
 		return
 	}
 	id, err = rs.LastInsertId()
@@ -26,6 +28,7 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 	defer rows.Close()
 
 	if err != nil {
+		log.Fatal(err.Error())
 		return
 	}
 
@@ -35,6 +38,7 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 		persons = append(persons, person)
 	}
 	if err = rows.Err(); err != nil {
+		log.Fatal(err.Error())
 		return
 	}
 	return

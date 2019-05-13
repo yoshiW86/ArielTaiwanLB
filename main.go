@@ -46,6 +46,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				userText := message.Text
 				// userID := message.ID
 				if userText == "CLOCK IN/OUT" {
+					replyMsg += "CLOCK IN/OUT/n"
 					//let user clock in/ out
 				} else if 0 <= strings.Index(userText, "register") {
 					//register

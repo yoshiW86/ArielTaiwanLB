@@ -53,13 +53,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
 					replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
-					// if hasUser(userID, strings.Fields(userText)[1]) {
-					// 	//yes
-
-					// }else{
+					if hasUser(userID, strings.Fields(userText)[1]) {
+						//yes
+						
+					}else{
 					// 	//no
 
-					// }
+					}
 
 				} else {
 					replyMsg += "not register;"

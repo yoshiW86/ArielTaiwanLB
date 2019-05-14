@@ -44,13 +44,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				userText := message.Text
-				// userID := message.ID
+				userID := message.ID
 				if userText == "CLOCK IN/OUT" {
-					replyMsg += "CLOCK IN/OUT/n"
+					replyMsg += "CLOCK IN/OUT;"
 					//let user clock in/ out
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
-					replyMsg += "register/n"
+					replyMsg += "register userID="+ userID
 					// if hasUser(userID, strings.Fields(userText)[1]) {
 					// 	//yes
 
@@ -60,12 +60,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					// }
 
 				} else {
-					replyMsg += "not register/n"
+					replyMsg += "not register;"
 					}
 				}
 
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMsg)).Do(); err != nil {
 					log.Print(err)
+					replyMsg = ""
 			}
 
 		}

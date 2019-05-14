@@ -52,7 +52,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					//let user clock in/ out
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
-					replyMsg += "register userID="+ userID
+					replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
 					// if hasUser(userID, strings.Fields(userText)[1]) {
 					// 	//yes
 

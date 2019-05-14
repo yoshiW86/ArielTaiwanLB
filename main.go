@@ -13,6 +13,7 @@ import (
 )
 
 var bot *linebot.Client
+var debugMsg string
 
 
 func main() {
@@ -40,10 +41,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
-
+			replyMsg := ""
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				replyMsg := ""
+				
 				userText := message.Text
 				userID := message.ID
 				if userText == "CLOCK IN/OUT" {
@@ -79,11 +80,11 @@ func hasUser(lineID string, userSetName string) bool {
 	ra, err := p.GetPersons()
  	if err != nil {
 		  log.Fatalln(err)
-		//   replyMsg+="fale/n"
+		  debugMsg+="fale/n"
 
 		  return false
 	} 
-	// replyMsg+="success getUser +" + ra[0].UserName
+	debugMsg+="success getUser +" + ra[0].UserName
 	return true
 	
 }

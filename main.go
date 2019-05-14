@@ -79,11 +79,11 @@ func hasUser(lineID string, userSetName string) bool {
 	ra, err := p.GetPersons()
  	if err != nil {
 		  log.Fatalln(err)
-		  replyMsg+="fale/n"
+		//   replyMsg+="fale/n"
 
 		  return false
 	} 
-	replyMsg+="success getUser +" + ra[0].UserName
+	// replyMsg+="success getUser +" + ra[0].UserName
 	return true
 	
 }

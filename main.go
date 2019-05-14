@@ -43,7 +43,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				var replyMsg string
+				replyMsg := ""
 				userText := message.Text
 				userID := message.ID
 				if userText == "CLOCK IN/OUT" {

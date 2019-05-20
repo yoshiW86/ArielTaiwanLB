@@ -76,6 +76,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func hasUser(lineID string, userSetName string) bool {
+	log.Println("hasUser, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
 	ra, err := p.GetPersons()
  	if err != nil {

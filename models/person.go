@@ -13,7 +13,7 @@ type Person struct {
 }
 
 func (p *Person) AddPerson() (id int64, err error) {
-	rs, err := db.SqlDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
+	rs, err := db.SQLDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
 	if err != nil {
 		log.Fatal(err.Error())
 		return
@@ -24,7 +24,7 @@ func (p *Person) AddPerson() (id int64, err error) {
 
 func (p *Person) GetPersons() (persons []Person, err error) {
 	persons = make([]Person, 0)
-	rows, err := db.SqlDB.Query("SELECT sn, user_name, user_lineid FROM person")
+	rows, err := db.SQLDB.Query("SELECT sn, user_name, user_lineid FROM person")
 	defer rows.Close()
 
 	if err != nil {

@@ -26,12 +26,13 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 	log.Println("@GetPerson=======")
 	persons = make([]Person, 0)
 	rows, err := db.SQLDB.Query("SELECT sn FROM person where = ?", p.UserName)
-	defer rows.Close()
 
 	if err != nil {
 		log.Fatal(err.Error())
 		return
 	}
+	defer rows.Close()
+
 
 	for rows.Next() {
 		var person Person

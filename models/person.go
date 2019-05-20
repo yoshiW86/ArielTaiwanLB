@@ -23,6 +23,7 @@ func (p *Person) AddPerson() (id int64, err error) {
 }
 
 func (p *Person) GetPersons() (persons []Person, err error) {
+	log.Println("@GetPerson=======")
 	persons = make([]Person, 0)
 	rows, err := db.SQLDB.Query("SELECT sn, user_name, user_lineid FROM person")
 	defer rows.Close()

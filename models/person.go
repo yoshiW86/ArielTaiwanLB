@@ -2,7 +2,7 @@ package models
 
 import (
 	db "github.com/yoshiW86/ArielTaiwanLB/database" 
-	// _ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 

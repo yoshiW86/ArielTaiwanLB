@@ -13,7 +13,7 @@ type Person struct {
 }
 
 func (p *Person) AddPerson() (id int64, err error) {
-	rs, err := db.SQLDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
+	rs, err := db.SqlDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
 	if err != nil {
 		log.Fatal(err.Error())
 		return
@@ -25,7 +25,7 @@ func (p *Person) AddPerson() (id int64, err error) {
 func (p *Person) GetPersons() (persons []Person, err error) {
 	log.Println("@GetPerson=======")
 	persons = make([]Person, 0)
-	rows, err := db.SQLDB.Query("SELECT sn FROM person where = ?", p.UserName)
+	rows, err := db.SqlDB.Query("SELECT sn FROM person where = ?", p.UserName)
 	log.Println("rows:",rows,"err:",err)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -36,12 +36,19 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 
 	for rows.Next() {
 		var person Person
-		rows.Scan(person.Sn, person.UserName, person.UserLineID)
+		rows.Scan(&person.Sn)
 		persons = append(persons, person)
 	}
 	if err = rows.Err(); err != nil {
 		log.Fatal(err.Error())
 		return
 	}
+	return
+}
+// get person
+func (p *Person) GetPerson() (err error){
+	db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_name = ?", p.UserName).Scan(
+		&p.Sn,
+	)
 	return
 }

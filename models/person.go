@@ -2,7 +2,7 @@ package models
 
 import (
 	db "github.com/yoshiW86/ArielTaiwanLB/database" 
-	_ "github.com/go-sql-driver/mysql"
+	// _ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
@@ -45,6 +45,7 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 	}
 	return
 }
+
 // get person
 func (p *Person) GetPerson() (err error){
 	db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_name = ?", p.UserName).Scan(

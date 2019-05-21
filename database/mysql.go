@@ -10,7 +10,7 @@ import (
 
 var SqlDB *sql.DB
 
-func mysql() {
+func init() {
 	var err error
 	dbPath := os.Getenv("DatabaseAC")+":"+os.Getenv("DatabasePW")+"@tcp("+os.Getenv("dbURL")+":3306)/"+os.Getenv("database")
 	log.Println("dbPath:",dbPath)

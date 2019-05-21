@@ -12,8 +12,8 @@ var SqlDB *sql.DB
 
 func mysql() {
 	var err error
-	log.Println("DatabaseAC:", os.Getenv("DatabaseAC"), "DatabasePW:", os.Getenv("DatabasePW"), "dbURL:",os.Getenv("dbURL"), "database:",os.Getenv("database"))
 	dbPath := os.Getenv("DatabaseAC")+":"+os.Getenv("DatabasePW")+"@tcp("+os.Getenv("dbURL")+":3306)/"+os.Getenv("database")
+	log.Println("dbPath:",dbPath)
 	SqlDB, err = sql.Open("mysql", dbPath)
 
 	if err != nil {

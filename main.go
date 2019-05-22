@@ -46,7 +46,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.TextMessage:
 				
 				userText := message.Text
-				userID := message.ID
+				userID := event.Source.UserID
 				if userText == "CLOCK IN/OUT" {
 					replyMsg += "CLOCK IN/OUT;"
 					//let user clock in/ out
@@ -78,6 +78,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 func hasUser(lineID string, userSetName string) bool {
 	log.Println("hasUser, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
+	log.Println("p:",p)
 	ra := p.GetPerson()
  	
 	log.Println("ra[0]:", ra)

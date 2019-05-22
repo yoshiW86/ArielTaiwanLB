@@ -53,14 +53,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
 					replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
-					if hasUser(userID, strings.Fields(userText)[1]) {
-						//yes
-						
-					}else{
-					// 	//no
-
-					}
-
+					replyMsg += hasUser(userID, strings.Fields(userText)[1]) 
 				} else {
 					replyMsg += "not register;"
 					}
@@ -75,13 +68,26 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func hasUser(lineID string, userSetName string) bool {
-	log.Println("hasUser, userSetName:", userSetName, " lineID:", lineID)
+func hasUser(lineID string, userSetName string) string {
+	log.Println("@hasUser===, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
 	log.Println("p:",p)
 	ra := p.GetPerson()
  	
 	log.Println("ra[0]:", ra)
-	return true
+	if nil != ra {
+		return "You are registered."
+	}
+	
+	id, err := p.AddPerson()
+	if nil != err {
+		log.Fatal(err)
+	}
+	log.Println("addPerson rs:", id)
+	if 0 < id {
+		return "success registration."
+	}
+	return "Registration Failed"
+
 	
 }

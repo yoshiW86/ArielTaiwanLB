@@ -72,7 +72,7 @@ func hasUser(lineID string, userSetName string) string {
 	log.Println("@hasUser===, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
 	log.Println("p:",p)
-	ra, err := p.GetPersonsByLID()
+	ra, err := p.GetPersonByLID()
 	if nil != err {
 		log.Fatal(err)
 	}

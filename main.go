@@ -52,7 +52,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					//let user clock in/ out
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
-					replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
+					// replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
 					replyMsg += hasUser(userID, strings.Fields(userText)[1]) 
 				} else {
 					replyMsg += "not register;"
@@ -72,8 +72,10 @@ func hasUser(lineID string, userSetName string) string {
 	log.Println("@hasUser===, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
 	log.Println("p:",p)
-	ra := p.GetPerson()
- 	
+	ra, err := p.GetPersonsByLID()
+	if nil != err {
+		log.Fatal(err)
+	}
 	log.Println("ra[0]:", ra)
 	if nil != ra {
 		return "You are registered."

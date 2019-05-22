@@ -22,10 +22,12 @@ func (p *Person) AddPerson() (id int64, err error) {
 	return
 }
 
-func (p *Person) GetPersonByLID() (persons []Person, err error) {
-	log.Println("@GetPersonByLID=======")
+
+//working
+func (p *Person) GetPersons() (persons []Person, err error) {
+	log.Println("@GetPersons=======")
 	persons = make([]Person, 0)
-	rows, err := db.SqlDB.Query("SELECT sn FROM person where user_lineid = ?", p.UserLineID)
+	rows, err := db.SqlDB.Query("SELECT sn FROM person where user_name= ?", p.UserName)
 	log.Println("rows:",rows,"err:",err)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -47,8 +49,8 @@ func (p *Person) GetPersonByLID() (persons []Person, err error) {
 }
 
 // get person
-func (p *Person) GetPerson() (err error){
-	db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_name = ?", p.UserName).Scan(
+func (p *Person) GetPersonByLID() (err error){
+	db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID).Scan(
 		&p.Sn,
 	)
 	return

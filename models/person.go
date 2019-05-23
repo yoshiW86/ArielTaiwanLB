@@ -52,7 +52,7 @@ func (p *Person) AddPerson() (id int64, err error) {
 func (p *Person) HadAUser() bool {
 	rs := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID)
 	if err := rs.Scan(&p.Sn); nil != err{
-		log.Fatal(err)
+		log.Println("sql: no rows in result set;",err)
 	}
 
 	log.Println("sn:", p.Sn)

@@ -48,10 +48,12 @@ func (p *Person) GetPersons() (persons []Person, err error) {
 	return
 }
 
-// get person
+// get a person
 func (p *Person) GetPersonByLID() (err error){
-	db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID).Scan(
+	rs := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID).Scan(
 		&p.Sn,
 	)
-	return
+
+	//add another columns
+	return rs
 }

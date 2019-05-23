@@ -50,11 +50,9 @@ func (p *Person) AddPerson() (id int64, err error) {
 
 // get a person
 func (p *Person) HadAUser() bool {
-	err := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID).Scan(
-		&p.Sn,
-	)
-	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+	rs := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID)
+	if err := rs.Scan(&p.Sn); nil != err{
+		log.Fatal(err)
 	}
 
 	log.Println("sn:", p.Sn)

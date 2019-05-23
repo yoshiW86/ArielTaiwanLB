@@ -53,7 +53,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				} else if 0 <= strings.Index(userText, "register") {
 					//register
 					// replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
-					replyMsg += hasUser(userID, strings.Fields(userText)[1]) 
+					replyMsg += checkUserStatus(userID, strings.Fields(userText)[1]) 
 				} else {
 					replyMsg += "not register;"
 					}
@@ -68,7 +68,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func hasUser(lineID string, userSetName string) string {
+func checkUserStatus(lineID string, userSetName string) string {
 	log.Println("@hasUser===, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
 	log.Println("p:",p)

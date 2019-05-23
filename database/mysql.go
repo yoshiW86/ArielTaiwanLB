@@ -12,9 +12,8 @@ var SqlDB *sql.DB
 
 func init() {
 	var err error
-	dbPath := os.Getenv("DatabaseAC")+":"+os.Getenv("DatabasePW")+"@tcp("+os.Getenv("dbURL")+":3306)/"+os.Getenv("database")
-	log.Println("dbPath:",dbPath)
-	SqlDB, err = sql.Open("mysql", dbPath)
+	// dbPath := os.Getenv("DatabaseAC")+":"+os.Getenv("DatabasePW")+"@tcp("+os.Getenv("dbURL")+":3306)/"+os.Getenv("database")
+	SqlDB, err = sql.Open("mysql", os.Getenv("DatabaseAC")+":"+os.Getenv("DatabasePW")+"@tcp("+os.Getenv("dbURL")+":3306)/"+os.Getenv("database"))
 
 	if err != nil {
 		log.Fatal(err.Error())

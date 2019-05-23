@@ -23,37 +23,44 @@ func (p *Person) AddPerson() (id int64, err error) {
 }
 
 
-//working
-func (p *Person) GetPersons() (persons []Person, err error) {
-	log.Println("@GetPersons=======")
-	persons = make([]Person, 0)
-	rows, err := db.SqlDB.Query("SELECT sn FROM person where user_name= ?", p.UserName)
-	log.Println("rows:",rows,"err:",err)
-	if err != nil {
-		log.Fatal(err.Error())
-		return
-	}
-	defer rows.Close()
+//////////////working/////////////
+// func (p *Person) GetPersons() (persons []Person, err error) {
+// 	log.Println("@GetPersons=======")
+// 	persons = make([]Person, 0)
+// 	rows, err := db.SqlDB.Query("SELECT sn FROM person where user_name= ?", p.UserName)
+// 	log.Println("rows:",rows,"err:",err)
+// 	if err != nil {
+// 		log.Fatal(err.Error())
+// 		return
+// 	}
+// 	defer rows.Close()
 
 
-	for rows.Next() {
-		var person Person
-		rows.Scan(&person.Sn)
-		persons = append(persons, person)
-	}
-	if err = rows.Err(); err != nil {
-		log.Fatal(err.Error())
-		return
-	}
-	return
-}
+// 	for rows.Next() {
+// 		var person Person
+// 		rows.Scan(&person.Sn)
+// 		persons = append(persons, person)
+// 	}
+// 	if err = rows.Err(); err != nil {
+// 		log.Fatal(err.Error())
+// 		return
+// 	}
+// 	return
+// }
 
 // get a person
-func (p *Person) GetPersonByLID() (err error){
-	rs := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID).Scan(
+func (p *Person) HadAUser() bool {
+	err := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID).Scan(
 		&p.Sn,
 	)
+	if err != nil {
+		panic(err.Error()) // proper error handling instead of panic in your app
+	}
 
+	log.Println("sn:", p.Sn)
 	//add another columns
-	return rs
+
+	if 0 < p.Sn { return true } 
+	return false
+
 }

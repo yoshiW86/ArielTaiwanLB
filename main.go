@@ -8,12 +8,12 @@ import (
 	"strings"
 
 	md "github.com/yoshiW86/ArielTaiwanLB/models"
-
+	
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 var bot *linebot.Client
-var debugMsg string
+
 
 
 func main() {
@@ -28,8 +28,6 @@ func main() {
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
-	
-
 	if err != nil {
 		if err == linebot.ErrInvalidSignature {
 			w.WriteHeader(400)
@@ -41,21 +39,24 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, event := range events {
 		if event.Type == linebot.EventTypeMessage {
-			replyMsg := ""
+			var replyMsg string
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				
 				userText := message.Text
-				userID := event.Source.UserID
-				if userText == "CLOCK IN/OUT" {
-					replyMsg += "CLOCK IN/OUT;"
+				userLineID := event.Source.UserID
+				p := md.Person{UserLineID:userLineID, UserName:strings.Fields(userText)[1]}
+				if !p.HadAUser(){
+					replyMsg = "You must to register first."						
+				} else if "CLOCK IN/OUT" == userText {
+					replyMsg = "CLOCK IN/OUT;"
 					//let user clock in/ out
+					
+					
 				} else if 0 <= strings.Index(userText, "register") {
-					//register
-					// replyMsg += "register userID=" + userID + " " + strings.Fields(userText)[1]
-					replyMsg += checkUserStatus(userID, strings.Fields(userText)[1]) 
+					replyMsg = checkUserStatus(userLineID, strings.Fields(userText)[1]) 
 				} else {
-					replyMsg += "not register;"
+					replyMsg = "not register;"
 					}
 				}
 
@@ -69,23 +70,20 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkUserStatus(lineID string, userSetName string) string {
-	log.Println("@hasUser===, userSetName:", userSetName, " lineID:", lineID)
+	// log.Println("@hasUser===, userSetName:", userSetName, " lineID:", lineID)
 	p := md.Person{UserLineID:lineID, UserName:userSetName}
-	log.Println("p:",p)
+	// log.Println("p:",p)
 	
-	if p.HadAUser() {
-		return "You are registered."
-	}
+	if p.HadAUser() { return "You had registered." }
 	
-	id, err := p.AddPerson()
-	if nil != err {
-		log.Fatal(err)
-	}
-	log.Println("addPerson rs:", id)
-	if 0 < id {
-		return "success registration."
-	}
+	id, err := p.AddAPerson()
+	if nil != err { log.Fatal(err) }
+	// log.Println("addPerson rs:", id)
+	if 0 < id { return "Your registration was successful!" }
 	return "Registration Failed"
-
-	
 }
+
+// func clockInNOut(lineID string){
+// 	ts := md.TimeSheet{}
+// 	ts.Has
+// }

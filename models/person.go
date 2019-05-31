@@ -2,7 +2,6 @@ package models
 
 import (
 	db "github.com/yoshiW86/ArielTaiwanLB/database" 
-	// _ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
@@ -12,7 +11,7 @@ type Person struct {
 	UserLineID string 
 }
 
-func (p *Person) AddPerson() (id int64, err error) {
+func (p *Person) AddAPerson() (id int64, err error) {
 	rs, err := db.SqlDB.Exec("INSERT INTO person(user_name, user_lineid) VALUES (?, ?)", p.UserName, p.UserLineID)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -48,17 +47,19 @@ func (p *Person) AddPerson() (id int64, err error) {
 // 	return
 // }
 
-// get a person
+// HadAUser check user exist
 func (p *Person) HadAUser() bool {
-	rs := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID)
-	if err := rs.Scan(&p.Sn); nil != err{
-		log.Println("sql: no rows in result set;",err)
-	}
-
-	log.Println("sn:", p.Sn)
-	//add another columns
-
-	if 0 < p.Sn { return true } 
+	if 0 < p.GetUserSN() { return true } 
 	return false
+}
 
+// GetUserSN just get user s/n
+func (p *Person) GetUserSN() int{
+	rs := db.SqlDB.QueryRow("SELECT sn FROM person WHERE user_lineid = ?", p.UserLineID)
+	err := rs.Scan(&p.Sn)
+	if nil != err {
+		log.Fatal(err)
+	}
+	log.Println("userLineID:", p.UserLineID, "sn:", p.Sn)
+	return p.Sn
 }
